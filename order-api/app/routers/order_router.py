@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from app.models.order import Order
 from app.services.order_service import OrderService
 
+
 router = APIRouter(
     prefix="/orders",
     tags=["Orders"]

@@ -1,6 +1,5 @@
 from app.kafka.producer import publish_order
 
-
 class OrderService:
 
     @staticmethod
