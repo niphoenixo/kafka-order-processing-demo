@@ -1,6 +1,12 @@
 from fastapi import FastAPI
 from app.routers.order_router import router as order_router
 
+from app.config.settings import settings
+
+print("=" * 50)
+print("Kafka Server:", settings.KAFKA_BOOTSTRAP_SERVERS)
+print("=" * 50)
+
 app = FastAPI(
     title="Kafka Order Processing Demo",
     description="Event-driven order processing using Apache Kafka",
