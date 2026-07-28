@@ -5,7 +5,7 @@ def process_payment(order):
     print(f"Amount         : {order['amount']}")
     print("Processing Payment...")
 
-    if order["amount"] > 1000:
+    if order.get("simulate_failure", False):
         raise Exception("Payment Gateway Unavailable")
 
     print("✅ Payment Successful")

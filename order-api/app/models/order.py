@@ -12,3 +12,4 @@ class Order(BaseModel):
     customer: str
     amount: float = Field(..., gt=0)
     items: List[OrderItem]
+    simulate_failure: bool
