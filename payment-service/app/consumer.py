@@ -2,9 +2,9 @@ import json
 
 from confluent_kafka import Consumer
 from dotenv import load_dotenv
-import os
-
 from pathlib import Path
+import os
+import random
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
@@ -26,6 +26,20 @@ print("Payment Service Started...")
 print("Waiting for orders...\n")
 
 
+
+def process_payment(order):
+    print("=" * 50)
+    print(f"Received Order : {order['order_id']}")
+    print(f"Customer       : {order['customer']}")
+    print(f"Amount         : {order['amount']}")
+    print("Processing Payment...")
+
+    if random.random() < 0.4:
+        raise Exception("Payment Gateway Unavailable")
+
+    print("✅ Payment Successful")
+    print("=" * 50)
+
 while True:
 
     msg = consumer.poll(1.0)
@@ -43,10 +57,4 @@ while True:
         print(f"Skipping invalid message: {msg.value().decode('utf-8')}")
         continue
 
-    print("=" * 50)
-    print(f"Received Order : {order['order_id']}")
-    print(f"Customer       : {order['customer']}")
-    print(f"Amount         : {order['amount']}")
-    print("Processing Payment...")
-    print("✅ Payment Successful")
-    print("=" * 50)
+    process_payment(order)
