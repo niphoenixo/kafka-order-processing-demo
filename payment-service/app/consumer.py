@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 import random
+from app.kafka.producer import publish_retry_order
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
@@ -13,11 +14,9 @@ print("Topic:", os.getenv("ORDER_TOPIC"))
 print("Group:", os.getenv("GROUP_ID"))
 
 
-consumer = Consumer({
-    "bootstrap.servers": os.getenv("KAFKA_BOOTSTRAP_SERVERS"),
-    "group.id": os.getenv("GROUP_ID"),
-    "auto.offset.reset": "earliest"
-})
+from app.kafka.consumer_factory import create_consumer
+
+consumer = create_consumer(os.getenv("GROUP_ID"))
 
 consumer.subscribe([os.getenv("ORDER_TOPIC")])
 
@@ -51,10 +50,13 @@ while True:
         print(msg.error())
         continue
 
-    try:
-        order = json.loads(msg.value().decode("utf-8"))
-    except json.JSONDecodeError:
-        print(f"Skipping invalid message: {msg.value().decode('utf-8')}")
-        continue
+    order = json.loads(msg.value().decode("utf-8"))
 
-    process_payment(order)
+    try:
+        process_payment(order)
+
+    except Exception as e:
+        print(f"\n❌ Payment Failed : {order['order_id']}")
+        print(str(e))
+
+        publish_retry_order(order)
