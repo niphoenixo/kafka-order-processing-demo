@@ -6,6 +6,7 @@ from pathlib import Path
 import os
 import random
 from app.kafka.producer import publish_retry_order
+from app.logger import logger
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
@@ -27,17 +28,26 @@ print("Waiting for orders...\n")
 
 
 def process_payment(order):
-    print("=" * 50)
-    print(f"Received Order : {order['order_id']}")
-    print(f"Customer       : {order['customer']}")
-    print(f"Amount         : {order['amount']}")
-    print("Processing Payment...")
+    logger.info(
+        "Received Order=%s Customer=%s Amount=%s",
+        order["order_id"],
+        order["customer"],
+        order["amount"]
+    )
 
-    if random.random() < 0.4:
+    logger.info("Processing payment...")
+    if order.get("simulate_failure", False):
+        logger.error(
+            "Order=%s Payment Gateway Unavailable",
+            order["order_id"]
+        )
         raise Exception("Payment Gateway Unavailable")
 
-    print("✅ Payment Successful")
-    print("=" * 50)
+    logger.info(
+        "Order=%s Payment Successful",
+        order["order_id"]
+    )
+        #print("=" * 50)
 
 while True:
 
@@ -58,5 +68,8 @@ while True:
     except Exception as e:
         print(f"\n❌ Payment Failed : {order['order_id']}")
         print(str(e))
-
+        logger.error(
+            "Order=%s Payment Failed",
+            order["order_id"]
+        )
         publish_retry_order(order)

@@ -1,12 +1,24 @@
+from app.logger import logger
+
 def process_payment(order):
-    print("=" * 60)
-    print(f"Received Order : {order['order_id']}")
-    print(f"Customer       : {order['customer']}")
-    print(f"Amount         : {order['amount']}")
-    print("Processing Payment...")
+    logger.info(
+        "Received Order=%s Customer=%s Amount=%s",
+        order["order_id"],
+        order["customer"],
+        order["amount"]
+    )
+
+    logger.info("Processing payment...")
 
     if order.get("simulate_failure", False):
+        logger.error(
+            "Order=%s Payment Gateway Unavailable",
+            order["order_id"]
+        )                                                                  
         raise Exception("Payment Gateway Unavailable")
 
-    print("✅ Payment Successful")
-    print("=" * 60)
+
+    logger.info(
+    "Order=%s Payment Successful",
+    order["order_id"]
+    )
