@@ -108,11 +108,11 @@ http://localhost:8080
 ![Kafka Architecture](docs/architecture.jpg)
 
 ## Kafka UI Screenshots
-![Kafka | UI Overview](Kafka_UI_Partitions.png)
+![Kafka | UI Overview](docs/Kafka_UI_Partitions.png)
 
-![Kafka | Topic: Orders - Messages](Kafka_UI_Topic_Messages.png)
+![Kafka | Topic: Orders - Messages](docs/Kafka_UI_Topic_Messages.png)
 
-![Kafka | Consumer groups](Kafka_UI_Consumer_Group.png)
+![Kafka | Consumer groups](docs/Kafka_UI_Consumer_Group.png)
 
 ## Order API 
 ** For Simulate Order retry and replay **
