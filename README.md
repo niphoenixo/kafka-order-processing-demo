@@ -8,25 +8,7 @@ This project demonstrates how distributed services communicate asynchronously us
 
 ## Architecture
 
-Order API
-↓
-orders
-↓
-Payment Service
-├── Payment Success
-└── Payment Failure
-↓
-payment-retry
-↓
-Retry Consumer
-├── Success
-└── Max Retry Exceeded
-↓
-payment-dlq
-↓
-Replay Worker
-↓
-orders
+![Kafka Architecture](docs/architecture.jpg)
 
 ## Features
 
@@ -103,10 +85,6 @@ http://localhost:8080
 - Historical Event Replay
 - Partition Keys
 
-
-## Architecture
-![Kafka Architecture](docs/architecture.jpg)
-
 ## Kafka UI Screenshots
 
 ### Kafka | UI Overview
@@ -124,7 +102,7 @@ postman request POST 'http://127.0.0.1:8001/orders' \
   --header 'accept: application/json' \
   --header 'Content-Type: application/json' \
   --body '{
-    "order_id":"ORD-11003",
+    "order_id":"ORD-9003",
     "customer":"Nisha",
     "amount":1200,
     "simulate_failure":true,
@@ -141,7 +119,7 @@ postman request POST 'http://127.0.0.1:8001/orders' \
   --header 'accept: application/json' \
   --header 'Content-Type: application/json' \
   --body '{
-    "order_id":"ORD-11004",
+    "order_id":"ORD-9004",
     "customer":"MaNisha",
     "amount":5200,
     "simulate_failure":false,
