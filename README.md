@@ -106,49 +106,7 @@ http://localhost:8080
 
 ## Architecture
 
-                    +----------------------+
-                    |      Order API       |
-                    |   (FastAPI Producer) |
-                    +----------+-----------+
-                               |
-                               | Publish Order
-                               v
-                      +------------------+
-                      |  orders Topic    |
-                      +------------------+
-                               |
-                               |
-                     Consumer Group
-                     payment-group
-                               |
-                               v
-                  +------------------------+
-                  |   Payment Service      |
-                  +------------------------+
-                    |                  |
-          Payment Success      Payment Failed
-                    |                  |
-                    |                  v
-                    |         payment-retry Topic
-                    |                  |
-                    |          Retry Consumer
-                    |                  |
-              Success          Retry Failed (3 attempts)
-                    |                  |
-                    |                  v
-                    |          payment-dlq Topic
-                    |                  |
-                    |                  v
-                    |          Replay Worker
-                    |                  |
-                    +------------------+
-                               |
-                         Publish Again
-                               |
-                               v
-                        orders Topic
-
-
+![Kafka Order Processing Demo](docs/images/architecture.jpg "Kafka Architecture")
 
 ## Order API 
 ** For Simulate Order retry and replay **
