@@ -1,3 +1,108 @@
+# Kafka Order Processing Demo
+
+A production-inspired event-driven microservices project built with **Python**, **FastAPI**, **Apache Kafka**, and **Docker**.
+
+## Overview
+
+This project demonstrates how distributed services communicate asynchronously using Apache Kafka while handling failures through retry topics, Dead Letter Queues (DLQ), and replay workflows.
+
+## Architecture
+
+Order API
+↓
+orders
+↓
+Payment Service
+├── Payment Success
+└── Payment Failure
+↓
+payment-retry
+↓
+Retry Consumer
+├── Success
+└── Max Retry Exceeded
+↓
+payment-dlq
+↓
+Replay Worker
+↓
+orders
+
+## Features
+
+- FastAPI Order API
+- Kafka Producer & Consumer
+- Event-driven communication
+- Consumer Groups
+- Partitioning using `order_id`
+- Retry Topic
+- Dead Letter Queue (DLQ)
+- Replay Worker
+- Historical replay using new consumer groups
+- Kafka UI integration
+- Docker Compose setup
+
+## Tech Stack
+
+- Python 3.8+
+- FastAPI
+- Apache Kafka 4.x (KRaft)
+- Confluent Kafka Python Client
+- Docker & Docker Compose
+
+## Running the Project
+
+Start Kafka and Kafka UI
+
+```bash
+docker compose up -d
+```
+
+Start Order API
+
+```bash
+cd order-api
+uvicorn app.main:app --reload
+```
+
+Start Payment Service
+
+```bash
+cd payment-service
+python -m app.main
+```
+
+Start Retry Consumer
+
+```bash
+python -m app.retry_consumer
+```
+
+Start Replay Worker
+
+```bash
+cd replay-worker
+python -m app.main
+```
+
+Kafka UI
+
+```
+http://localhost:8080
+```
+
+## Kafka Concepts Demonstrated
+
+- Event-driven architecture
+- Topics & Partitions
+- Consumer Groups
+- Offset Management
+- Retry Pattern
+- Dead Letter Queue
+- Replay Processing
+- Historical Event Replay
+- Partition Keys
+
 
 ## ⭐ Useful Commands
 
