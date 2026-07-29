@@ -62,7 +62,7 @@ Start Order API
 
 ```bash
 cd order-api
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --port 8001
 ```
 
 Start Payment Service
@@ -106,6 +106,13 @@ http://localhost:8080
 
 ## Architecture
 ![Kafka Architecture](docs/architecture.jpg)
+
+## Kafka UI Screenshots
+![Kafka | UI Overview](Kafka_UI_Partitions.png)
+
+![Kafka | Topic: Orders - Messages](Kafka_UI_Topic_Messages.png)
+
+![Kafka | Consumer groups](Kafka_UI_Consumer_Group.png)
 
 ## Order API 
 ** For Simulate Order retry and replay **
