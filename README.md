@@ -162,7 +162,7 @@ postman request POST 'http://127.0.0.1:8001/orders' \
     "simulate_failure":true,
     "items":[
         {
-            "product":"MacBook",
+            "product":"Keyboard",
             "quantity":1
         }
     ]
@@ -173,9 +173,9 @@ postman request POST 'http://127.0.0.1:8001/orders' \
   --header 'accept: application/json' \
   --header 'Content-Type: application/json' \
   --body '{
-    "order_id":"ORD-11003",
-    "customer":"Nisha",
-    "amount":1200,
+    "order_id":"ORD-11004",
+    "customer":"MaNisha",
+    "amount":5200,
     "simulate_failure":false,
     "items":[
         {
@@ -184,6 +184,8 @@ postman request POST 'http://127.0.0.1:8001/orders' \
         }
     ]
 }'
+
+
 
 ## ⭐ Useful Commands
 
