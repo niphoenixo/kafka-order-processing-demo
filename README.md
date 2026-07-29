@@ -108,10 +108,14 @@ http://localhost:8080
 ![Kafka Architecture](docs/architecture.jpg)
 
 ## Kafka UI Screenshots
+
+### Kafka | UI Overview
 ![Kafka | UI Overview](docs/Kafka_UI_Partitions.png)
 
+### Kafka | Topic: Orders - Messages
 ![Kafka | Topic: Orders - Messages](docs/Kafka_UI_Topic_Messages.png)
 
+### Kafka | Consumer groups
 ![Kafka | Consumer groups](docs/Kafka_UI_Consumer_Group.png)
 
 ## Order API 
