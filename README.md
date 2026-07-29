@@ -105,8 +105,7 @@ http://localhost:8080
 
 
 ## Architecture
-
-![Kafka Order Processing Demo](docs/images/architecture.jpg "Kafka Architecture")
+![Kafka Architecture](docs/architecture.jpg)
 
 ## Order API 
 ** For Simulate Order retry and replay **
