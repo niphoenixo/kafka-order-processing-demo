@@ -104,6 +104,87 @@ http://localhost:8080
 - Partition Keys
 
 
+## Architecture
+
+                    +----------------------+
+                    |      Order API       |
+                    |   (FastAPI Producer) |
+                    +----------+-----------+
+                               |
+                               | Publish Order
+                               v
+                      +------------------+
+                      |  orders Topic    |
+                      +------------------+
+                               |
+                               |
+                     Consumer Group
+                     payment-group
+                               |
+                               v
+                  +------------------------+
+                  |   Payment Service      |
+                  +------------------------+
+                    |                  |
+          Payment Success      Payment Failed
+                    |                  |
+                    |                  v
+                    |         payment-retry Topic
+                    |                  |
+                    |          Retry Consumer
+                    |                  |
+              Success          Retry Failed (3 attempts)
+                    |                  |
+                    |                  v
+                    |          payment-dlq Topic
+                    |                  |
+                    |                  v
+                    |          Replay Worker
+                    |                  |
+                    +------------------+
+                               |
+                         Publish Again
+                               |
+                               v
+                        orders Topic
+
+
+
+## Order API 
+** For Simulate Order retry and replay **
+postman request POST 'http://127.0.0.1:8001/orders' \
+  --header 'accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --body '{
+    "order_id":"ORD-11003",
+    "customer":"Nisha",
+    "amount":1200,
+    "simulate_failure":true,
+    "items":[
+        {
+            "product":"MacBook",
+            "quantity":1
+        }
+    ]
+}'
+
+** For Successful Order **
+postman request POST 'http://127.0.0.1:8001/orders' \
+  --header 'accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --body '{
+    "order_id":"ORD-11003",
+    "customer":"Nisha",
+    "amount":1200,
+    "simulate_failure":false,
+    "items":[
+        {
+            "product":"MacBook",
+            "quantity":1
+        }
+    ]
+}'
+
 ## ⭐ Useful Commands
 
 ## 1️ List all topics
